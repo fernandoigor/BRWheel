@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C5F80730-F44F-4478-BDAE-6634EFC2CA88}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectName>brWheel</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>
+    </PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>
+    </PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\brWheel;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\libraries\digitalWriteFast;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\libraries\Wire;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\libraries\Wire\utility;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\libraries;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\hardware\arduino\libraries;C:\Users\ferna\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino\avr-libc;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\hardware\arduino\variants\leonardo;$(ProjectDir)..\..\..\..\Arduino\arduino-1.0.5-r2\hardware;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.brWheel.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <PreprocessorDefinitions>__AVR_ATmega32u4__;__AVR_ATmega32U4__;ARDUINO=105;ARDUINO_MAIN;__AVR__;__avr__;F_CPU=16000000L;__cplusplus=201103L;ARDUINO_ARCH_AVR;ARDUINO_AVR_LEONARDO;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="VisualMicro" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="brWheel.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="Config.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="debug.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="ffb.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="ffb_pro.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="Inputs.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="pwm.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="QuadEncoder.ino">
+      <FileType>CppCode</FileType>
+    </None>
+    <None Include="SerialInterface.ino">
+      <FileType>CppCode</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ffb.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ffb_pro.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="HID.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="QuadEncoder.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="USBCore.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="__vm\.brWheel.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HID.cpp" />
+    <ClCompile Include="USBCore.cpp" />
+  </ItemGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties arduino.upload.maximum_size="28672" arduino.upload.speed="57600" visualmicro.package.name="arduino" arduino.board.property_bag="name=BRWheel Joystick&#xD;&#xA;upload.protocol=avr109&#xD;&#xA;upload.maximum_size=28672&#xD;&#xA;upload.speed=57600&#xD;&#xA;upload.disable_flushing=true&#xD;&#xA;bootloader.low_fuses=0xff&#xD;&#xA;bootloader.high_fuses=0xd8&#xD;&#xA;bootloader.extended_fuses=0xcb&#xD;&#xA;bootloader.path=caterina&#xD;&#xA;bootloader.file=Caterina-Leonardo.hex&#xD;&#xA;bootloader.unlock_bits=0x3F&#xD;&#xA;bootloader.lock_bits=0x2F&#xD;&#xA;build.mcu=atmega32u4&#xD;&#xA;build.f_cpu=16000000L&#xD;&#xA;build.vid=0x9999&#xD;&#xA;build.pid=0x9999&#xD;&#xA;build.core=arduino&#xD;&#xA;build.variant=leonardo&#xD;&#xA;build.usb_product=&quot;BRWheel Joystick&quot;&#xD;&#xA;runtime.ide.path=D:\Arduino\arduino-1.0.5-r2&#xD;&#xA;runtime.os=windows&#xD;&#xA;build.system.path=D:\Arduino\arduino-1.0.5-r2\hardware\arduino\system&#xD;&#xA;runtime.ide.version=105&#xD;&#xA;target_package=arduino&#xD;&#xA;target_platform=avr&#xD;&#xA;runtime.hardware.path=D:\Arduino\arduino-1.0.5-r2\hardware&#xD;&#xA;originalid=leonardo&#xD;&#xA;vm.platform.root.path=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\53ggn0bh.0i3\Micro Platforms\arduino10x&#xD;&#xA;avrisp.name=AVR ISP&#xD;&#xA;avrisp.communication=serial&#xD;&#xA;avrisp.protocol=stk500v1&#xD;&#xA;avrispmkii.name=AVRISP mkII&#xD;&#xA;avrispmkii.communication=usb&#xD;&#xA;avrispmkii.protocol=stk500v2&#xD;&#xA;usbtinyisp.name=USBtinyISP&#xD;&#xA;usbtinyisp.protocol=usbtiny&#xD;&#xA;usbasp.name=USBasp&#xD;&#xA;usbasp.communication=usb&#xD;&#xA;usbasp.protocol=usbasp&#xD;&#xA;parallel.name=Parallel Programmer&#xD;&#xA;parallel.protocol=dapa&#xD;&#xA;parallel.force=true&#xD;&#xA;arduinoisp.name=Arduino as ISP&#xD;&#xA;arduinoisp.communication=serial&#xD;&#xA;arduinoisp.protocol=stk500v1&#xD;&#xA;arduinoisp.speed=19200&#xD;&#xA;runtime.vm.boardinfo.id=leonardo&#xD;&#xA;runtime.vm.boardinfo.name=leonardo&#xD;&#xA;runtime.vm.boardinfo.desc=BRWheel Joystick&#xD;&#xA;runtime.vm.boardinfo.src_location=D:\Arduino\arduino-1.0.5-r2\hardware\arduino&#xD;&#xA;ide.hint=For use with Arduino 0023 and 1.0.x versions&#xD;&#xA;ide.location.key=Arduino&#xD;&#xA;ide.location.ide.winreg=Arduino 1.0.x Application&#xD;&#xA;ide.location.sketchbook.winreg=Arduino 1.0.x Sketchbook&#xD;&#xA;ide.location.sketchbook.preferences=sketchbook.path&#xD;&#xA;ide.location.sketchbook.default=%MYDOCUMENTS%\arduino&#xD;&#xA;ide.location.preferences=%VM_APPDATA_ROAMING%\arduino\preferences.txt&#xD;&#xA;ide.default.package=arduino&#xD;&#xA;ide.default.platform=avr&#xD;&#xA;ide.multiplatform=true&#xD;&#xA;ide.includes=Arduino.h&#xD;&#xA;ide.platformswithoutpackage=true&#xD;&#xA;ide.includes.fallback=wprogram.h&#xD;&#xA;ide.extension=ino&#xD;&#xA;ide.extension.fallback=pde&#xD;&#xA;ide.versionLTEQ=149&#xD;&#xA;ide.exe=arduino.exe&#xD;&#xA;ide.hosts=atmel&#xD;&#xA;ide.url=http://arduino.cc/en/Main/Software&#xD;&#xA;vm.debug=true&#xD;&#xA;software=ARDUINO&#xD;&#xA;ide.appid=arduino10x&#xD;&#xA;location.sketchbook=C:\Users\ferna\Documents\Arduino&#xD;&#xA;build.core.path=D:\Arduino\arduino-1.0.5-r2\hardware\arduino\cores\arduino&#xD;&#xA;vm.core.include=Arduino.h&#xD;&#xA;build.board=AVR_LEONARDO&#xD;&#xA;vm.boardsource.path=D:\Arduino\arduino-1.0.5-r2\hardware\arduino&#xD;&#xA;runtime.platform.path=D:\Arduino\arduino-1.0.5-r2\hardware\arduino&#xD;&#xA;vm.platformname.name=avr&#xD;&#xA;build.arch=AVR&#xD;&#xA;builder.noino=false&#xD;&#xA;intellisense.include.paths={runtime.hardware.path}&#xD;&#xA;build.path=C:\Users\ferna\AppData\Local\Temp\VMBuilds\brWheel\leonardo\Debug&#xD;&#xA;build.project_name=brWheel.ino&#xD;&#xA;build.project_path=D:\GitHub\BRWheel\BRWheel\brWheel&#xD;&#xA;ProjectDir=D:\GitHub\BRWheel\BRWheel\brWheel\&#xD;&#xA;" visualmicro.application.name="arduino10x" arduino.build.mcu="atmega32u4" arduino.upload.protocol="avr109" arduino.build.f_cpu="16000000L" arduino.board.desc="BRWheel Joystick" arduino.board.name="leonardo" arduino.upload.port="COM3" visualmicro.platform.name="avr" arduino.build.core="arduino" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
