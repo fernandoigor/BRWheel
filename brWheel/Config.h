@@ -13,13 +13,13 @@
 #define USE_SHIFT_REGISTER			// 8-bit Parallel-load shift registers G27 board steering wheel
 //#define USE_DUAL_SHIFT_REGISTER		// Dual 8-bit Parallel-load shift registers G27 board shifter
 
-#define CALIBRATE_AT_INIT	0
+#define CALIBRATE_AT_INIT	1
 
 //------------------------------------- Pins -------------------------------------------------------------
 
 #define LED_PIN				13
-#define	LCSYNC_LED_PIN		8
-#define	SYNC_LED_PIN		7
+//#define	LCSYNC_LED_PIN		8
+//#define	SYNC_LED_PIN		7
 
 #define ACCEL_PIN			A0
 #define BRAKE_PIN			A1
@@ -30,6 +30,7 @@
 #define SHIFTREG_CLK		5		// CLOCK 8-bit Parallel shift
 #define SHIFTREG_DATA_SW	6		// DATA Steering Wheel
 #define SHIFTREG_DATA_H		7		// DATA Shifter H (Dual 8-bit)
+#define SHIFTREG_DATA_OUT	3		// DATA Shift-Out LED (8-bit)   ###### NOT YET IMPLEMENTED ######
 
 
 /* NOT USED
@@ -41,8 +42,10 @@
 
 #define PIN_MISO			12		// Hack : This pin has been connected to ICSP MISO
 */
-#define	PWM_PIN				9
+
+#define	PWM_PIN				9 
 #define	DIR_PIN				10
+#define	REVERSE_DIR_PIN		11
 
 #define ACCEL_INPUT 0
 #define BRAKE_INPUT 1
@@ -69,7 +72,7 @@
 #define PARAM_ADDR_OFFSET			4
 #define PARAM_ADDR_MAX_ROTATION		8
 
-#define VERSION		0x00000002
+#define VERSION		0x00000003
 
 #define GetParam(m_offset,m_data)	getParam((m_offset),(u8*)&(m_data),sizeof(m_data))
 #define SetParam(m_offset,m_data)	setParam((m_offset),(u8*)&(m_data),sizeof(m_data))
@@ -84,7 +87,6 @@
 
 #define SEND_PERIOD		4000
 
-#define NEXT_SHIFT_PERIOD 500
 #define CONFIG_SERIAL_PERIOD 50000
 
 

@@ -111,9 +111,9 @@ void setup()
 
 	DEBUG_SERIAL.begin(115200);
 
- 	pinMode(LCSYNC_LED_PIN,OUTPUT);
- 	pinMode(SYNC_LED_PIN,OUTPUT);
-  	pinMode(LED_PIN, OUTPUT);
+ 	//pinMode(LCSYNC_LED_PIN,OUTPUT);
+ 	//pinMode(SYNC_LED_PIN,OUTPUT);
+  	//pinMode(LED_PIN, OUTPUT);
 
 // 	pinMode(SCK,INPUT); //11,INPUT);
 // 	pinMode(MISO,INPUT); //12,INPUT);
