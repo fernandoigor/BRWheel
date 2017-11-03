@@ -224,16 +224,13 @@ u16 readInputButtons() {
 			buttons |= bmask;
 		bmask <<= 1;
 
-		if (((btnVal_H >> i) & 1) == 1)
-			buttons |= bmask;
-		bmask <<= 1;
 	}
-	/*for (u8 i = 0; i < 8; i++)
+	for (u8 i = 0; i < 8; i++)
 	{
 		if (((btnVal_H >> i) & 1) == 1)
 			buttons |= bmask;
 		bmask <<= 1;
-	}*/
+	}
 	return(buttons);
 }
 //--------------------------------------------------------------------------------------------------------
