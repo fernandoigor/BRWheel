@@ -225,12 +225,13 @@ u16 readInputButtons() {
 		bmask <<= 1;
 
 	}
-	for (u8 i = 0; i < 8; i++)
+	for (u8 i = 0; i < 4; i++)	// Total of 12 buttons, only 4 buttons for the other shiftregister, i'll try to increase the number of buttons.
 	{
 		if (((btnVal_H >> i) & 1) == 1)
 			buttons |= bmask;
 		bmask <<= 1;
 	}
+	
 	return(buttons);
 }
 //--------------------------------------------------------------------------------------------------------
