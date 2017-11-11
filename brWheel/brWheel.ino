@@ -63,6 +63,7 @@ u32 timeDiffConfigSerial = now_micros;
 
 
 
+
 //----------------------------------------- Options -------------------------------------------------------
 
 /*
@@ -144,6 +145,7 @@ void setup()
 //--------------------------------------------------------------------------------------------------------
 void loop()
 {
+	
 	now_micros = micros();
 	{
 		time_diff = now_micros - last_send;
@@ -173,27 +175,27 @@ void loop()
 
 			ReadAnalogInputs();
 			nextInputState();
-		}
-#endif
-		if (time_diff > SEND_PERIOD)
-		{
-			last_send = now_micros;
+			//if (time_diff > SEND_PERIOD)
+			{
+				last_send = now_micros;
 
-			AverageAnalogInputs();
-			accel = analog_inputs[ACCEL_INPUT];
-			brake = analog_inputs[BRAKE_INPUT];
-			clutch = analog_inputs[CLUTCH_INPUT];
-			
-			
-			//u16 buttons = ReadDigitalInputs();
-			u16 buttons = readInputButtons();
-			SendInputReport((s16)turn,(u16)accel,(u16)brake,(u16)clutch,buttons);
+				//AverageAnalogInputs();		// DOSNT need for same update rate (PositionWheel and UsbRefresh)
+				accel = analog_inputs[ACCEL_INPUT];
+				brake = analog_inputs[BRAKE_INPUT];
+				clutch = analog_inputs[CLUTCH_INPUT];
 
-			ClearAnalogInputs();
-			if (timeDiffConfigSerial > CONFIG_SERIAL_PERIOD) {
-				readSerial();
-				last_ConfigSerial = now_micros;
+
+				//u16 buttons = ReadDigitalInputs();
+				u16 buttons = readInputButtons();
+				SendInputReport((s16)turn, (u16)accel, (u16)brake, (u16)clutch, buttons);
+
+				ClearAnalogInputs();
+				if (timeDiffConfigSerial > CONFIG_SERIAL_PERIOD) {
+					readSerial();
+					last_ConfigSerial = now_micros;
+				}
 			}
 		}
+#endif
 	}
 }
