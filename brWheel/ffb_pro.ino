@@ -212,6 +212,7 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 				command -= ConstrainEffect(mag)*configConstantGain;
 				break;
 			case USB_EFFECT_RAMP:
+				command -= ConstrainEffect(mag)*configConstantGain;
 				break;
 			case USB_EFFECT_SQUARE:
 				break;
