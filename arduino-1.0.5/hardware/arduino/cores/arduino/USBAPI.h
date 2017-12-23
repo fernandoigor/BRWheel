@@ -77,6 +77,7 @@ public:
    void send_16_16_12 (int16_t x,uint16_t y,uint16_t z,uint16_t buttons);
    void send_16(int16_t x,uint16_t y,uint16_t z,uint8_t buttons);
    void send_16_10_10_10(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint16_t buttons);
+   void send_16_12_12_12(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons);
 };
 extern Joystick_ Joystick;
 
