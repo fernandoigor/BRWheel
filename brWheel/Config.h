@@ -24,7 +24,9 @@
 #define ACCEL_PIN			A0
 #define BRAKE_PIN			A1
 #define CLUTCH_PIN			A2
-#define TURN_PIN			A3
+//#define TURN_PIN			A3		// NOT USED
+#define SHIFTER_X_PIN		A4
+#define SHIFTER_Y_PIN		A5
 
 #define SHIFTREG_PL			4		// PL SH/LD (Shift or Load input)
 #define SHIFTREG_CLK		5		// CLOCK 8-bit Parallel shift
@@ -72,7 +74,7 @@
 #define PARAM_ADDR_OFFSET			4
 #define PARAM_ADDR_MAX_ROTATION		8
 
-#define VERSION		0x00000004
+#define VERSION		0x00000005
 
 #define GetParam(m_offset,m_data)	getParam((m_offset),(u8*)&(m_data),sizeof(m_data))
 #define SetParam(m_offset,m_data)	setParam((m_offset),(u8*)&(m_data),sizeof(m_data))

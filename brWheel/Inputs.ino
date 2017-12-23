@@ -42,24 +42,15 @@ u8 digital_inputs_pins[] = {3,6,7,8,11,12};
 u8 analog_inputs_pins[] = 
 {
 	ACCEL_PIN,
-//#ifndef USE_LOAD_CELL
 	BRAKE_PIN,
 	CLUTCH_PIN
-//#endif
-//#ifndef USE_QUADRATURE_ENCODER
-	//TURN_PIN,
-//#endif
 };
 
 u8 axis_shift_n_bits[] = 
 {
 	Z_AXIS_NB_BITS - ADC_NB_BITS,
-#ifndef USE_LOAD_CELL
-	Y_AXIS_NB_BITS - ADC_NB_BITS
-#endif
-#ifndef USE_QUADRATURE_ENCODER
-	X_AXIS_NB_BITS - ADC_NB_BITS,
-#endif
+	Y_AXIS_NB_BITS - ADC_NB_BITS,
+	RX_AXIS_NB_BITS - ADC_NB_BITS
 };
 
 s32 analog_inputs[sizeof(analog_inputs_pins)];
@@ -255,12 +246,5 @@ int ReadAnalogInputs ()
 void AverageAnalogInputs ()
 {
 	for (u8 i = 0; i < sizeof(analog_inputs_pins); i++)
-		analog_inputs[i] = (analog_inputs[i]) / nb_mes;
-		//analog_inputs[i] = (analog_inputs[i] << axis_shift_n_bits[i]) / nb_mes;
-
-/*
-#ifdef USE_DSP56ADC16S
-	analog_inputs[TURN_INPUT] = -analog_inputs[TURN_INPUT] + 0x8000;
-#endif
-*/
+		analog_inputs[i] = (analog_inputs[i] << axis_shift_n_bits[i]) / nb_mes;
 }

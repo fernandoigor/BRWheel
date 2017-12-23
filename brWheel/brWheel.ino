@@ -145,7 +145,7 @@ void setup()
 //--------------------------------------------------------------------------------------------------------
 void loop()
 {
-	
+	ReadAnalogInputs();				// Some reading to take an average
 	now_micros = micros();
 	{
 		time_diff = now_micros - last_send;
@@ -173,17 +173,16 @@ void loop()
 			turn = (turn*X_AXIS_PHYS_MAX) / ROTATION_MAX;
 			turn = constrain(turn,-MID_REPORT_X,MID_REPORT_X);
 
-			ReadAnalogInputs();
-			nextInputState();
-			//if (time_diff > SEND_PERIOD)
+			
+			nextInputState();						// Refresh state shift-register
+
+			// USB Report
 			{
 				last_send = now_micros;
-
-				//AverageAnalogInputs();		// DOSNT need for same update rate (PositionWheel and UsbRefresh)
+				AverageAnalogInputs();				// Average readings
 				accel = analog_inputs[ACCEL_INPUT];
 				brake = analog_inputs[BRAKE_INPUT];
 				clutch = analog_inputs[CLUTCH_INPUT];
-
 
 				//u16 buttons = ReadDigitalInputs();
 				u16 buttons = readInputButtons();
