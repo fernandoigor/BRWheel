@@ -110,7 +110,7 @@ void setup()
 
 	//ReadEEPROMConfig();
 
-	DEBUG_SERIAL.begin(115200);
+	CONFIG_SERIAL.begin(115200);
 
  	//pinMode(LCSYNC_LED_PIN,OUTPUT);
  	//pinMode(SYNC_LED_PIN,OUTPUT);

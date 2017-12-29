@@ -32,7 +32,7 @@ void setPWMDir (s16 torque)		// torque between -PWM_TOP and +PWM_TOP
 		dir = 0; 
 		rev = 1;
 	}
-	OCR1A = constrain(torque,0,MM_MAX_MOTOR_TORQUE - 10);
+	OCR1A = constrain(torque,0,MM_MAX_MOTOR_TORQUE - 1);
 	digitalWriteFast(DIR_PIN,dir);
 	digitalWriteFast(REVERSE_DIR_PIN, rev);
 	//DEBUG_SERIAL.println(temp);
@@ -41,7 +41,7 @@ void setPWMDir (s16 torque)		// torque between -PWM_TOP and +PWM_TOP
 void setPWM (s16 torque)		// torque between -PWM_TOP and +PWM_TOP
 {
 	//torque = (torque + MM_MAX_MOTOR_TORQUE) >> 1;
-	torque = constrain(torque,0,MM_MAX_MOTOR_TORQUE - 10);
+	torque = constrain(torque,0,MM_MAX_MOTOR_TORQUE - 1);
 	OCR1A = torque;
 }
 

@@ -201,41 +201,54 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 		s16 offset;
 		s16 phase;
 		*/
+		
 		volatile TEffectState &ef = gEffectStates[id];
 		if (ef.state == MEffectState_Playing)//(Btest(ef.state,MEffectState_Allocated | MEffectState_Playing)))
 		{
 			s32 err = ef.offset - pos;
-			s32 mag = (((s32)ef.magnitude)*((s32)ef.gain))/163;
+			s32 mag = (((s32)-ef.offset + (s32)ef.magnitude)*((s32)ef.gain))/163;
 			switch (ef.type)
 			{
 			case USB_EFFECT_CONSTANT:
 				command -= ConstrainEffect(mag)*configConstantGain;
+				//LogTextLf("_pro Constant");
 				break;
 			case USB_EFFECT_RAMP:
 				command -= ConstrainEffect(mag)*configConstantGain;
+				//LogTextLf("_pro ramp");
 				break;
 			case USB_EFFECT_SQUARE:
+				//LogTextLf("_pro square");
 				break;
 			case USB_EFFECT_SINE:
-				command += SineEffect(1,ef.period,mag)*configSineGain;
+				command -= ConstrainEffect(mag)*configConstantGain;
+				//command += SineEffect(1,ef.period,mag)*configSineGain;
+				//LogTextLf("_pro sine");
 				break;
 			case USB_EFFECT_TRIANGLE:
+				//LogTextLf("_pro triangle");
 				break;
 			case USB_EFFECT_SAWTOOTHDOWN:
+				//LogTextLf("_pro sawtoothdown");
 				break;
 			case USB_EFFECT_SAWTOOTHUP:
+				//LogTextLf("_pro sawtootup");
 				break;
 			case USB_EFFECT_SPRING:
 				command += SpringEffect(err,mag)*configSpringGain;
+				//LogTextLf("_pro spring");
 				break;
 			case USB_EFFECT_DAMPER:
 				command += DamperEffect(spd,mag)*configDamperGain;
+				//LogTextLf("_pro damper");
 				break;
 			case USB_EFFECT_INERTIA:
 				command += InertiaEffect(spd,mag)*configInertiaGain;
+				//LogTextLf("_pro inertia");
 				break;
 			case USB_EFFECT_FRICTION:
 				command += FrictionEffect(spd,mag)*configFrictionGain;
+				//LogTextLf("_pro friction");
 				break;
 			case USB_EFFECT_CUSTOM:
 				break;
@@ -403,17 +416,19 @@ void FfbproSetPeriodic (USB_FFBReport_SetPeriodic_Output_Data_t* data,volatile T
 	uint8_t eid = data->effectBlockIndex;
 
 	/*
-	USB effect data:
+		typedef struct
+		{ // FFB: Set Periodic Output Report
 		uint8_t	reportId;	// =4
 		uint8_t	effectBlockIndex;	// 1..40
 		uint8_t magnitude;
 		int8_t	offset;
 		uint8_t	phase;	// 0..255 (=0..359, exp-2)
 		uint16_t	period;	// 0..32767 ms
+		} USB_FFBReport_SetPeriodic_Output_Data_t;
 	*/
 	
 	effect->magnitude = (s16)data->magnitude;
-	effect->offset = (((s32)data->offset)*ROTATION_MID)>>7;
+	effect->offset = (((s32)data->offset));// *ROTATION_MID) >> 7;
 	effect->phase = (s16)data->phase;
 	effect->period = (s16)data->period;
 }

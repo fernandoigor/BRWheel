@@ -283,6 +283,7 @@ void FfbOnUsbData(uint8_t *data, uint16_t len)
 	{
 		case 1:
 			FfbHandle_SetEffect((USB_FFBReport_SetEffect_Output_Data_t *) data);
+			LogTextLf("Set Effect");
 			break;
 		case 2:
 			ffb->SetEnvelope((USB_FFBReport_SetEnvelope_Output_Data_t*) data, &gEffectStates[effectId]);
@@ -290,6 +291,7 @@ void FfbOnUsbData(uint8_t *data, uint16_t len)
 			break;
 		case 3:
 			ffb->SetCondition((USB_FFBReport_SetCondition_Output_Data_t*) data, &gEffectStates[effectId]);
+			LogTextLf("Set Condition");
 /*
 			LogText("Set Condition - offset : ");
 			LogBinary(&((USB_FFBReport_SetCondition_Output_Data_t*)data)->cpOffset,1);
@@ -299,39 +301,45 @@ void FfbOnUsbData(uint8_t *data, uint16_t len)
 			break;
 		case 4:
 			ffb->SetPeriodic((USB_FFBReport_SetPeriodic_Output_Data_t*) data, &gEffectStates[effectId]);
-//			LogTextLf("Set Periodic");
+			//LogTextLf("Set Periodic");
 			break;
 		case 5:
 			ffb->SetConstantForce((USB_FFBReport_SetConstantForce_Output_Data_t*) data, &gEffectStates[effectId]);
-//			LogTextLf("Set Constant Force");
+			//LogTextLf("Set Constant Force");
 			break;
 		case 6:
 			ffb->SetRampForce((USB_FFBReport_SetRampForce_Output_Data_t*)data, &gEffectStates[effectId]);
-			LogTextLf("Set Ramp Force");
+			//LogTextLf("Set Ramp Force");
 			break;
 		case 7:
 			FfbHandle_SetCustomForceData((USB_FFBReport_SetCustomForceData_Output_Data_t*) data);
-			LogTextLf("Set Custom Force Table");
+			//LogTextLf("Set Custom Force Table");
 			break;
 		case 8:
 			FfbHandle_SetDownloadForceSample((USB_FFBReport_SetDownloadForceSample_Output_Data_t*) data);
+			//LogTextLf("Set download");
 			break;
 		case 9:
 			break;
 		case 10:
 			FfbHandle_EffectOperation((USB_FFBReport_EffectOperation_Output_Data_t*) data);
+			//LogTextLf("Set operation");
 			break;
 		case 11:
 			FfbHandle_BlockFree((USB_FFBReport_BlockFree_Output_Data_t *) data);
+			//LogTextLf("Set blockfree");
 			break;
 		case 12:
 			FfbHandle_DeviceControl((USB_FFBReport_DeviceControl_Output_Data_t*) data);
+			//LogTextLf("Set devicecontrol");
 			break;
 		case 13:
 			FfbHandle_DeviceGain((USB_FFBReport_DeviceGain_Output_Data_t*) data);
+			//LogTextLf("Set devicegain");
 			break;
 		case 14:
 			FfbHandle_SetCustomForce((USB_FFBReport_SetCustomForce_Output_Data_t*) data);
+			//LogTextLf("Set customforce");
 			break;
 		default:
 			break;

@@ -74,7 +74,7 @@
 #define PARAM_ADDR_OFFSET			4
 #define PARAM_ADDR_MAX_ROTATION		8
 
-#define VERSION		0x00000005
+#define VERSION		0x00000006
 
 #define GetParam(m_offset,m_data)	getParam((m_offset),(u8*)&(m_data),sizeof(m_data))
 #define SetParam(m_offset,m_data)	setParam((m_offset),(u8*)&(m_data),sizeof(m_data))
