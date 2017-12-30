@@ -142,42 +142,27 @@ const u8 _hidReportDescriptor[] =
 			0x95, 1,						// REPORT_COUNT (1)
 			0x81, 0x02,					// INPUT (Data,Var,Abs)
 
-			0x09,0x31,					// USAGE (y)
-			0x16,Y_AXIS_LOG_MIN & 0xFF,(Y_AXIS_LOG_MIN >> 8) & 0xFF, // LOGICAL_MINIMUM
-			0x27,Y_AXIS_LOG_MAX & 0xFF,(Y_AXIS_LOG_MAX >> 8) & 0xFF,0,0, // LOGICAL_MAXIMUM
-			0x35,0x00,					// PHYSICAL_MINIMUM (00)
-			0x47,Y_AXIS_PHYS_MAX & 0xFF,(Y_AXIS_PHYS_MAX >> 8) & 0xFF,0,0,//(Y_AXIS_PHYS_MAX >> 16) & 0xFF,(Y_AXIS_PHYS_MAX >> 24) & 0xFF, // LOGICAL_MAXIMUM (0xffff)
-			0x75,Y_AXIS_NB_BITS,		// REPORT_SIZE (AXIS_NB_BITS)
-			0x95,1,						// REPORT_COUNT (1)
-			0x81,0x02,					// INPUT (Data,Var,Abs)
-
-			0x09,0x32,					// USAGE (z)
-			0x16,Z_AXIS_LOG_MIN & 0xFF,(Z_AXIS_LOG_MIN >> 8) & 0xFF, // LOGICAL_MINIMUM
-			0x27,Z_AXIS_LOG_MAX & 0xFF,(Z_AXIS_LOG_MAX >> 8) & 0xFF,0,0, // LOGICAL_MAXIMUM
-			0x35,0x00,					// PHYSICAL_MINIMUM (00)
-			0x47,Z_AXIS_PHYS_MAX & 0xFF,(Z_AXIS_PHYS_MAX >> 8) & 0xFF,0,0,//(Z_AXIS_PHYS_MAX >> 16) & 0xFF,(Z_AXIS_PHYS_MAX >> 24) & 0xFF, // LOGICAL_MAXIMUM (0xffff)
-			0x75,Z_AXIS_NB_BITS,		// REPORT_SIZE (AXIS_NB_BITS)
-			0x95,1,						// REPORT_COUNT (1)
-			0x81,0x02,					// INPUT (Data,Var,Abs)
-
-			0x09, 0x33,					// USAGE (rx)
-			0x16, RX_AXIS_LOG_MIN & 0xFF, (RX_AXIS_LOG_MIN >> 8) & 0xFF, // LOGICAL_MINIMUM
-			0x27, RX_AXIS_LOG_MAX & 0xFF, (RX_AXIS_LOG_MAX >> 8) & 0xFF, 0, 0, // LOGICAL_MAXIMUM
+			0x09, 0x31,					// USAGE (y)
+			0x09, 0x32,					// USAGE (z)
+			0x09, 0x33,					// USAGE (z)
+			0x16, Y_AXIS_LOG_MIN & 0xFF, (Y_AXIS_LOG_MIN >> 8) & 0xFF, // LOGICAL_MINIMUM
+			0x27, Y_AXIS_LOG_MAX & 0xFF, (Y_AXIS_LOG_MAX >> 8) & 0xFF, 0, 0, // LOGICAL_MAXIMUM
 			0x35, 0x00,					// PHYSICAL_MINIMUM (00)
-			0x47, RX_AXIS_PHYS_MAX & 0xFF, (RX_AXIS_PHYS_MAX >> 8) & 0xFF, 0, 0,//(X_AXIS_PHYS_MAX >> 16) & 0xFF,(X_AXIS_PHYS_MAX >> 24) & 0xFF, // LOGICAL_MAXIMUM (0xffff)
-			0x75, RX_AXIS_NB_BITS,		// REPORT_SIZE (AXIS_NB_BITS)
-			0x95, 1,						// REPORT_COUNT (1)
+			0x47, Y_AXIS_PHYS_MAX & 0xFF, (Y_AXIS_PHYS_MAX >> 8) & 0xFF, 0, 0,//(X_AXIS_PHYS_MAX >> 16) & 0xFF,(X_AXIS_PHYS_MAX >> 24) & 0xFF, // LOGICAL_MAXIMUM (0xffff)
+			0x75, Y_AXIS_NB_BITS,		// REPORT_SIZE (AXIS_NB_BITS)
+			0x95, 0x03,						// REPORT_COUNT (3)
 			0x81, 0x02,					// INPUT (Data,Var,Abs)
+		//0xc0, // END_COLLECTION
 
 			0x05, 0x09,                    // USAGE_PAGE (Button)
-			0x19, 1,					   // USAGE_MINIMUM (button 1)
-			0x29, NB_BUTTONS,              // USAGE_MAXIMUM (button NB_BUTTONS)
 			0x15, 0x00,                    // LOGICAL_MINIMUM (0)
 			0x25, 0x01,                    // LOGICAL_MAXIMUM (1)
+			0x55, 0x00,                    // UNIT_EXPONENT (0)
+			0x65, 0x00,                    // UNIT (None)
+			0x19, 0x01,					   // USAGE_MINIMUM (button 1)
+			0x29, NB_BUTTONS,              // USAGE_MAXIMUM (button NB_BUTTONS)
 			0x75, 0x01,                    // REPORT_SIZE (1)
 			0x95, NB_BUTTONS,			   // REPORT_COUNT (NB_BUTTONS)
-			//0x55, 0x00,                    // UNIT_EXPONENT (0)
-			//0x65, 0x00,                    // UNIT (None)
 			0x81, 0x02,                    // Input (Data,Var,Abs)
 			
 		0xc0, // END_COLLECTION
@@ -944,6 +929,22 @@ void Joystick_::send_16_12_12_12(int16_t x, uint16_t y, uint16_t z, uint16_t rx,
 	j[7] = buttons >> 8 | 0x00;			//
 
 	HID_SendReport(4, j, 8);
+}
+// 16+10+10+10 bits version + 18 buttons
+void Joystick_::send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons)
+{
+	u8 j[8];
+	j[0] = x;											//8B
+	j[1] = x >> 8;										//8B
+	j[2] = y;											//8B
+	j[3] = ((y >> 8) & 0x3) | ((z & 0x3f) << 2);		// falta 2/10   vai 6/10
+	j[4] = ((z >> 6) & 0xf) | ((rx & 0xf) << 4);		// falta 4/10   vai 4/10
+	j[5] = ((rx >> 4) & 0x3f) | ((buttons & 0x3) << 6);	// falta 6/10	vai 2/18
+	j[6] = (buttons >> 2);								// 10/18
+	j[7] = (buttons >> 10);								// 18/18
+
+	HID_SendReport(4, j, 8);
+
 }
 
 // 16+16+16 bits version + 8 buttons

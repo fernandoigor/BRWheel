@@ -184,8 +184,8 @@ void loop()
 				brake = analog_inputs[BRAKE_INPUT];
 				clutch = analog_inputs[CLUTCH_INPUT];
 
-				//u16 buttons = ReadDigitalInputs();
-				u16 buttons = readInputButtons();
+				u32 buttons = readInputButtons();
+
 				SendInputReport((s16)turn, (u16)accel, (u16)brake, (u16)clutch, buttons);
 
 				ClearAnalogInputs();

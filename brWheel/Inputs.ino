@@ -205,7 +205,7 @@ void nextInputState() {
 	SHIFTREG_STATE++;
 }
 
-u16 readInputButtons() {
+u32 readInputButtons() {
 	
 	u32 buttons = 0;
 	u32 bmask = 1;
@@ -216,7 +216,7 @@ u16 readInputButtons() {
 		bmask <<= 1;
 
 	}
-	for (u8 i = 0; i < 4; i++)	// Total of 12 buttons, only 4 buttons for the other shiftregister, i'll try to increase the number of buttons.
+	for (u8 i = 0; i < 8; i++)
 	{
 		if (((btnVal_H >> i) & 1) == 1)
 			buttons |= bmask;
