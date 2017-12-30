@@ -61,11 +61,11 @@
 
 #define NB_AXIS			4
 #define NB_FF_AXIS		1
-#define NB_BUTTONS		12
+#define NB_BUTTONS		18
 #define X_AXIS_NB_BITS	16
-#define Y_AXIS_NB_BITS	12
-#define Z_AXIS_NB_BITS	12
-#define RX_AXIS_NB_BITS	12
+#define Y_AXIS_NB_BITS	10
+#define Z_AXIS_NB_BITS	10
+#define RX_AXIS_NB_BITS	10
 
 #define X_AXIS_LOG_MAX	((1L<<(X_AXIS_NB_BITS-1))-1)
 #define X_AXIS_LOG_MIN	(-X_AXIS_LOG_MAX)
@@ -86,8 +86,10 @@
 //#define SendInputReport(m_x,m_y,m_z,m_buttons)			Joystick.send_12(m_x,m_y,m_z,m_buttons)
 //#define SendInputReport(m_x,m_y,m_z,m_buttons)			Joystick.send_16_12_12(m_x,m_y,m_z,m_buttons)
 //#define SendInputReport(m_x,m_y,m_z,m_buttons)			Joystick.send_16_16_12(m_x,m_y,m_z,m_buttons)
-#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_10_10(m_x,m_y,m_z,m_rx,m_buttons)
+//#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_10_10(m_x,m_y,m_z,m_rx,m_buttons)
 //#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_16_12(m_x,m_y,m_z,m_buttons)
+#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_18(m_x,m_y,m_z,m_rx,m_buttons)
+
 
 #endif
 
