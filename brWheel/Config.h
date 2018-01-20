@@ -74,7 +74,7 @@
 #define PARAM_ADDR_OFFSET			4
 #define PARAM_ADDR_MAX_ROTATION		8
 
-#define VERSION		0x00000006
+#define VERSION		0x00000007
 
 #define GetParam(m_offset,m_data)	getParam((m_offset),(u8*)&(m_data),sizeof(m_data))
 #define SetParam(m_offset,m_data)	setParam((m_offset),(u8*)&(m_data),sizeof(m_data))
@@ -95,14 +95,14 @@
 
 //------------------------------------- FFB Config -----------------------------------------------------
 
-f32 configDamperGain = 1.0;		//ok
-f32 configFrictionGain = 1.0;	//OK
+f32 configDamperGain = 0.5;		//ok
+f32 configFrictionGain = 0.5;	//OK
 f32 configConstantGain = 1.0;	//OK
 f32 configSineGain = 1.0f;		//OK
 f32 configSpringGain = 1.0f;	//OK
 f32 configInertiaGain = 1.0f;	//OK
 f32 configGeneralGain = 1.0f;	//OK
-f32 configCenterGain = 1.0f;	//OK
+f32 configCenterGain = 0.7f;	//OK
 f32 configStopGain = 1.0f;	//OK
 
 int MM_MIN_MOTOR_TORQUE=200;

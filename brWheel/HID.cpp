@@ -167,8 +167,8 @@ const u8 _hidReportDescriptor[] =
 			
 		0xc0, // END_COLLECTION
 		
-		
-		
+
+
 		0x05,0x0F,	// USAGE_PAGE (Physical Interface)
 		0x09,0x92,	// USAGE (PID State Report)
 		0xA1,0x02,	// COLLECTION (Logical)
@@ -475,7 +475,7 @@ const u8 _hidReportDescriptor[] =
 			0x91,0x02,	// OUTPUT (Data,Var,Abs)
 		0xC0,	// END COLLECTION ()
 
-		/*0x09,0x74,	// USAGE (Set Ramp Force Report)
+		0x09,0x74,	// USAGE (Set Ramp Force Report)
 		0xA1,0x02,	// COLLECTION (Logical)
 			0x85,0x06,	// REPORT_ID (06)
 			0x09,0x22,	// USAGE (Effect Block Index)
@@ -495,7 +495,7 @@ const u8 _hidReportDescriptor[] =
 			0x75,0x08,	// REPORT_SIZE (08)
 			0x95,0x02,	// REPORT_COUNT (02)
 			0x91,0x02,	// OUTPUT (Data,Var,Abs)
-		0xC0,	// END COLLECTION ()*/
+		0xC0,	// END COLLECTION ()
 
 		0x09,0x68,	// USAGE (Custom Force Data Report)
 		0xA1,0x02,	// COLLECTION (Logical)

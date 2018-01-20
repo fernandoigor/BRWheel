@@ -165,7 +165,7 @@ void InitShiftRegister() {
 
 void nextInputState() {
 	long bitVal = 0;
-	if (SHIFTREG_STATE > 17) {	// SINGLE SHIFT = 25 states  DUAL SHIFT = 49 states (both zero include), 33 for 16 shifts
+	if (SHIFTREG_STATE > 33) {	// SINGLE SHIFT = 25 states  DUAL SHIFT = 49 states (both zero include), 33 for 16 shifts
 		SHIFTREG_STATE = 0;
 		btnVal_SW = bytesVal_SW;
 		btnVal_H = bytesVal_H;
@@ -191,7 +191,7 @@ void nextInputState() {
 			bytesVal_SW |= (bitVal << ((8 - 1) - i));
 
 			bitVal = digitalRead(SHIFTREG_DATA_H);
-			bytesVal_H |= (bitVal << ((8 - 1) - i));
+			bytesVal_H |= (bitVal << ((16 - 1) - i));
 
 			i++;
 			digitalWrite(SHIFTREG_CLK, HIGH);
@@ -216,12 +216,13 @@ u32 readInputButtons() {
 		bmask <<= 1;
 
 	}
-	for (u8 i = 0; i < 8; i++)
+	for (u8 i = 0; i <16; i++)
 	{
 		if (((btnVal_H >> i) & 1) == 1)
 			buttons |= bmask;
 		bmask <<= 1;
 	}
+	//DEBUG_SERIAL.println(btnVal_H);
 	
 	return(buttons);
 }

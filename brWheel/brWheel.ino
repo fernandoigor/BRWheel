@@ -146,6 +146,7 @@ void setup()
 void loop()
 {
 	ReadAnalogInputs();				// Some reading to take an average
+	nextInputState();						// Refresh state shift-register
 	now_micros = micros();
 	{
 		time_diff = now_micros - last_send;
@@ -173,8 +174,6 @@ void loop()
 			turn = (turn*X_AXIS_PHYS_MAX) / ROTATION_MAX;
 			turn = constrain(turn,-MID_REPORT_X,MID_REPORT_X);
 
-			
-			nextInputState();						// Refresh state shift-register
 
 			// USB Report
 			{
