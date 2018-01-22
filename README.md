@@ -17,9 +17,9 @@
  ![pinout](https://github.com/fernandoigor/BRWheel/blob/master/BRWarduinoSchema.png)
  
 > Alpha test branch
-> Current version: 0.6
+> Current version: 0.7
 
 ```sh
- - FFB (Set Periodic), working rFactor2
+ - FFB (Added periodic effect type), working rFactor2
  - Turn (16bits), throttle,brake and clutch (10bits) and 18 Buttons (but 16 working with G27)
 ```
