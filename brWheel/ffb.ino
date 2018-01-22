@@ -203,13 +203,9 @@ void StopAllEffects(void)
 
 void StartEffect(uint8_t id)
 {
-	
-	if ((id > MAX_EFFECTS)){
-	return;
-	}
-	else if(gEffectStates[id].state != MEffectState_Playing){
-		gEffectStates[id].state = MEffectState_Playing;
-	}
+	if ((id > MAX_EFFECTS) || (gEffectStates[id].state == 0))
+		return;
+	gEffectStates[id].state |= MEffectState_Playing;
 }
 
 void StopEffect(uint8_t id)

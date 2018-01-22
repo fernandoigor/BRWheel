@@ -203,10 +203,14 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 		*/
 		
 		volatile TEffectState &ef = gEffectStates[id];
-		if (ef.state == MEffectState_Playing)//(Btest(ef.state,MEffectState_Allocated | MEffectState_Playing)))
+		if (Btest(ef.state,MEffectState_Allocated | MEffectState_Playing))
 		{
 			s32 err = ef.offset - pos;
-			s32 mag = (((s32)-ef.offset + (s32)ef.magnitude)*((s32)ef.gain))/163;
+			s32 mag = (((s32)ef.magnitude)*((s32)ef.gain))/163;
+			// rFactor2 use only offset for main effect
+			s32 offset = ef.offset + 1;				// offset works in range -128...0...+127, and start effect with value -1
+			offset *= 3.125;						// to operate the force effect [0,400];
+
 			switch (ef.type)
 			{
 			case USB_EFFECT_CONSTANT:
@@ -221,8 +225,7 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 				//LogTextLf("_pro square");
 				break;
 			case USB_EFFECT_SINE:
-				command -= ConstrainEffect(mag)*configConstantGain;
-				//command += SineEffect(1,ef.period,mag)*configSineGain;
+				command += SineEffect(1,ef.period,mag)*configSineGain;
 				//LogTextLf("_pro sine");
 				break;
 			case USB_EFFECT_TRIANGLE:
@@ -251,6 +254,10 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 				//LogTextLf("_pro friction");
 				break;
 			case USB_EFFECT_CUSTOM:
+				break;
+			case USB_EFFECT_PERIODIC:
+				command -= ConstrainEffect(offset)*configConstantGain;
+				//LogTextLf("_pro periodic");
 				break;
 			default:
 				break;
@@ -426,7 +433,7 @@ void FfbproSetPeriodic (USB_FFBReport_SetPeriodic_Output_Data_t* data,volatile T
 		uint16_t	period;	// 0..32767 ms
 		} USB_FFBReport_SetPeriodic_Output_Data_t;
 	*/
-	
+	effect->type = USB_EFFECT_PERIODIC;
 	effect->magnitude = (s16)data->magnitude;
 	effect->offset = (((s32)data->offset));// *ROTATION_MID) >> 7;
 	effect->phase = (s16)data->phase;

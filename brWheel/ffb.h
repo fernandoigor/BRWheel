@@ -272,6 +272,7 @@ void FfbEnableEffectId(uint8_t inId, uint8_t inEnable);
 #define USB_EFFECT_INERTIA		0x0A
 #define USB_EFFECT_FRICTION		0x0B
 #define USB_EFFECT_CUSTOM		0x0C
+#define USB_EFFECT_PERIODIC		0x0D
 
 typedef struct 
 {
