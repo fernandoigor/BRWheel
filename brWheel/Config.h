@@ -1,6 +1,7 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+
 //------------------------------------- Options ----------------------------------------------------------
 
 //#define USE_VNH5019				// Pololu dual 24V DC motor drive
@@ -24,7 +25,6 @@
 #define ACCEL_PIN			A0
 #define BRAKE_PIN			A1
 #define CLUTCH_PIN			A2
-//#define TURN_PIN			A3		// NOT USED
 #define SHIFTER_X_PIN		A4
 #define SHIFTER_Y_PIN		A5
 
@@ -52,6 +52,8 @@
 #define ACCEL_INPUT 0
 #define BRAKE_INPUT 1
 #define CLUTCH_INPUT 2
+#define SHIFTER_X_INPUT 3
+#define SHIFTER_Y_INPUT 4
 /*
 #ifdef USE_LOAD_CELL
 #define TURN_INPUT 1
@@ -74,7 +76,7 @@
 #define PARAM_ADDR_OFFSET			4
 #define PARAM_ADDR_MAX_ROTATION		8
 
-#define VERSION		0x00000007
+#define VERSION		0x00000008
 
 #define GetParam(m_offset,m_data)	getParam((m_offset),(u8*)&(m_data),sizeof(m_data))
 #define SetParam(m_offset,m_data)	setParam((m_offset),(u8*)&(m_data),sizeof(m_data))

@@ -20,7 +20,6 @@ void InitPWM ()
 	ICR1 = MM_MAX_MOTOR;
 #endif
 }
-
 void setPWMDir (s16 torque)		// torque between -PWM_TOP and +PWM_TOP
 {
 	u8 dir = 1,rev = 0;
@@ -32,6 +31,13 @@ void setPWMDir (s16 torque)		// torque between -PWM_TOP and +PWM_TOP
 		dir = 0; 
 		rev = 1;
 	}
+	if (torque > 0)
+		torque = map(torque, 0, 1000, MM_MIN_MOTOR_TORQUE, MM_MAX_MOTOR_TORQUE);
+	else if (command < 0)
+		torque = -map(-torque, 0, 1000, MM_MIN_MOTOR_TORQUE, MM_MAX_MOTOR_TORQUE);
+	else
+		torque = 0;
+
 	OCR1A = constrain(torque,0,MM_MAX_MOTOR_TORQUE - 1);
 	digitalWriteFast(DIR_PIN,dir);
 	digitalWriteFast(REVERSE_DIR_PIN, rev);

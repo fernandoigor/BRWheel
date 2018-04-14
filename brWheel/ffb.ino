@@ -30,9 +30,10 @@
 #include <stdint.h>
 #include "debug.h"
 #include "ffb_pro.h"
+#include "ConfigHID.h"
 
 //------------------------------------- Defines ----------------------------------------------------------
-
+u8 valueglobal = 55;
 #define LEDs_SetAllLEDs(l)
 
 #define FIRST_EID	1
@@ -115,6 +116,7 @@ b8 HID_GetReport (Setup& setup)
 
 b8 HID_SetReport (Setup& setup)
 {
+	
 	u8 report_id = setup.wValueL;
 	u8 report_type = setup.wValueH;
 	if (report_id == 5)
@@ -123,6 +125,7 @@ b8 HID_SetReport (Setup& setup)
 		USB_RecvControl(&ans,sizeof(USB_FFBReport_CreateNewEffect_Feature_Data_t));
 		FfbOnCreateNewEffect(&ans,&gNewEffectBlockLoad);
 	}
+
 	return(true);
 }
 
@@ -193,7 +196,6 @@ uint8_t GetNextFreeEffect(void)
 		
 	return id;
  }
-
 void StopAllEffects(void)
 {
 	LogTextLf("FFB.ino StopAllEffects ");
@@ -274,7 +276,7 @@ void FfbOnUsbData(uint8_t *data, uint16_t len)
 	LEDs_SetAllLEDs(LEDS_ALL_LEDS);
 
 	uint8_t effectId = data[1]; // effectBlockIndex is always the second byte.
-		
+
 	switch (data[0])	// reportID
 	{
 		case 1:
@@ -336,6 +338,9 @@ void FfbOnUsbData(uint8_t *data, uint16_t len)
 		case 14:
 			FfbHandle_SetCustomForce((USB_FFBReport_SetCustomForce_Output_Data_t*) data);
 			//LogTextLf("Set customforce");
+			break;
+		case 241:
+			configHID((USB_ConfigReport*) data);
 			break;
 		default:
 			break;

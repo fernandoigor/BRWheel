@@ -49,6 +49,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #define cli()
 #include "brWheel.ino"
 #include "Config.ino"
+#include "ConfigHID.ino"
 #include "Inputs.ino"
 #include "QuadEncoder.ino"
 #include "SerialInterface.ino"

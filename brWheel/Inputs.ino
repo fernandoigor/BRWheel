@@ -43,7 +43,9 @@ u8 analog_inputs_pins[] =
 {
 	ACCEL_PIN,
 	BRAKE_PIN,
-	CLUTCH_PIN
+	CLUTCH_PIN,
+	SHIFTER_X_PIN,
+	SHIFTER_Y_PIN
 };
 
 u8 axis_shift_n_bits[] = 
@@ -126,7 +128,8 @@ void InitInputs()
 		pinMode(digital_inputs_pins[i],INPUT_PULLUP);
 
 	for (u8 i = 0; i < sizeof(analog_inputs_pins); i++)
-		pinMode(analog_inputs_pins[i],INPUT);*/
+		pinMode(analog_inputs_pins[i],INPUT);
+		*/
 
 
 /*#ifdef USE_QUADRATURE_ENCODER
@@ -247,5 +250,6 @@ int ReadAnalogInputs ()
 void AverageAnalogInputs ()
 {
 	for (u8 i = 0; i < sizeof(analog_inputs_pins); i++)
-		analog_inputs[i] = (analog_inputs[i] << axis_shift_n_bits[i]) / nb_mes;
+		analog_inputs[i] = (analog_inputs[i]) / nb_mes;
+		//analog_inputs[i] = (analog_inputs[i] << axis_shift_n_bits[i]) / nb_mes;
 }

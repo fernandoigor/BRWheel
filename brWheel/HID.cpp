@@ -145,12 +145,14 @@ const u8 _hidReportDescriptor[] =
 			0x09, 0x31,					// USAGE (y)
 			0x09, 0x32,					// USAGE (z)
 			0x09, 0x33,					// USAGE (z)
+			0x09, 0x34,					// USAGE (z)
+			0x09, 0x35,					// USAGE (z)
 			0x16, Y_AXIS_LOG_MIN & 0xFF, (Y_AXIS_LOG_MIN >> 8) & 0xFF, // LOGICAL_MINIMUM
 			0x27, Y_AXIS_LOG_MAX & 0xFF, (Y_AXIS_LOG_MAX >> 8) & 0xFF, 0, 0, // LOGICAL_MAXIMUM
 			0x35, 0x00,					// PHYSICAL_MINIMUM (00)
 			0x47, Y_AXIS_PHYS_MAX & 0xFF, (Y_AXIS_PHYS_MAX >> 8) & 0xFF, 0, 0,//(X_AXIS_PHYS_MAX >> 16) & 0xFF,(X_AXIS_PHYS_MAX >> 24) & 0xFF, // LOGICAL_MAXIMUM (0xffff)
 			0x75, Y_AXIS_NB_BITS,		// REPORT_SIZE (AXIS_NB_BITS)
-			0x95, 0x03,						// REPORT_COUNT (3)
+			0x95, 0x05,						// REPORT_COUNT (3)
 			0x81, 0x02,					// INPUT (Data,Var,Abs)
 		//0xc0, // END_COLLECTION
 
@@ -164,7 +166,22 @@ const u8 _hidReportDescriptor[] =
 			0x75, 0x01,                    // REPORT_SIZE (1)
 			0x95, NB_BUTTONS,			   // REPORT_COUNT (NB_BUTTONS)
 			0x81, 0x02,                    // Input (Data,Var,Abs)
-			
+
+
+			// FOR CONFIG PROFILE
+				0x85, 0xf1,                    //   REPORT_ID (f1)
+				0x09, 0x01,                    //   USAGE (Vendor Usage 1)
+				0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
+				0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+				0x95, 0x3F, //0x20,                    //   REPORT_COUNT (32)
+				0x75, 0x08,                    //   REPORT_SIZE (8)
+				0x91, 0x82,                    //   OUTPUT (Data,Var,Abs,Vol)	//8
+
+				0x85, 0xf2,                    //   REPORT_ID (f2)
+				0x09, 0x01,                    //   USAGE (Vendor Usage 3)
+				0x95, 0x3F, //0x20,                    //   REPORT_COUNT (32)
+				0x75, 0x08,                    //   REPORT_SIZE (8)
+				0x81, 0x82,                    //   INPUT (Data,Var,Abs,Vol)	8
 		0xc0, // END_COLLECTION
 		
 
@@ -933,6 +950,43 @@ void Joystick_::send_16_12_12_12(int16_t x, uint16_t y, uint16_t z, uint16_t rx,
 // 16+10+10+10 bits version + 18 buttons
 void Joystick_::send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons)
 {
+	u8 j[9];
+	j[0] = x;											//8B
+	j[1] = x >> 8;										//8B
+	j[2] = y;											//8B
+	j[3] = z;		// falta 2/10   vai 6/10
+	j[4] = rx;		// falta 4/10   vai 4/10
+	j[5] = buttons;	// falta 6/10	vai 2/18
+	j[6] = (buttons >> 8);								// 10/18
+	j[7] = (buttons >> 16);								// 18/18
+	j[8] = (buttons >> 24);
+
+	HID_SendReport(4, j, 9);
+
+}
+
+
+void Joystick_::send_16_8_32(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint16_t sx, uint16_t sy, uint32_t buttons)
+{
+	u8 j[11];
+	j[0] = x;											//8B
+	j[1] = x >> 8;										//8B
+	j[2] = y;											//8B
+	j[3] = z;		// falta 2/10   vai 6/10
+	j[4] = rx;		// falta 4/10   vai 4/10
+	j[5] = sx;
+	j[6] = sy;
+	j[7] = buttons;	// falta 6/10	vai 2/18
+	j[8] = (buttons >> 8);								// 10/18
+	j[9] = (buttons >> 16);								// 18/18
+	j[10] = (buttons >> 24);
+
+	HID_SendReport(4, j, 11);
+
+}
+/*
+void Joystick_::send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons)
+{
 	u8 j[8];
 	j[0] = x;											//8B
 	j[1] = x >> 8;										//8B
@@ -945,7 +999,7 @@ void Joystick_::send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, ui
 
 	HID_SendReport(4, j, 8);
 
-}
+}*/
 
 // 16+16+16 bits version + 8 buttons
 void Joystick_::send_16(int16_t x,uint16_t y,uint16_t z,uint8_t buttons)

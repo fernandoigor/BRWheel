@@ -58,6 +58,8 @@ const f32 gSpringSet = 0.125f; // 0.005
 
 //--------------------------------------- Globals --------------------------------------------------------
 
+f32 posSine = 0;
+
 f32 PROGMEM fir_coefs[NB_TAPS] =
 {
 	0.070573279, 
@@ -155,7 +157,8 @@ s32 SpringEffect (s32 err,s32 mag)
 s32 SineEffect (f32 freq,f32 t,s32 mag)
 {
 	//return(ConstrainEffect((s32)(((f32)mag)*sin(freq * TWO_PI*t))));
-	return(ConstrainEffect((s32)(((f32)mag)*sin(TWO_PI/t))));
+	//return(ConstrainEffect((s32)(((f32)mag)*sin(TWO_PI/t))));
+	return(ConstrainEffect((s32)(((f32)mag)*sin(PI*posSine)))); // posFreq incremente each cycle
 }
 
 s32 InertiaEffect(f32 spd, s32 mag)
@@ -181,11 +184,13 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 {
 // 	if ((!Btest(pidState.status,ACTUATORS_ENABLED)) || (Btest(pidState.status,DEVICE_PAUSED)))
 // 		return(0);
+
 	s32 command = s32(0);
 	f32 spd = mSpeed.Update(pos);
 	if (gFFB.mAutoCenter)
 	{
-		command += SpringEffect(-pos,AUTO_CENTER_SPRING)*configCenterGain;
+		if(abs(pos) > 50)
+			command += SpringEffect(-pos,AUTO_CENTER_SPRING)*configCenterGain;
 	}
 	else for (u8 id = FIRST_EID; id <= MAX_EFFECTS; id++)
 	{
@@ -206,7 +211,9 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 		if (Btest(ef.state,MEffectState_Allocated | MEffectState_Playing))
 		{
 			s32 err = ef.offset - pos;
-			s32 mag = (((s32)ef.magnitude)*((s32)ef.gain))/163;
+			//s32 mag = (((s32)ef.magnitude)*((s32)ef.gain))/163;
+			s32 mag = (((s32)ef.magnitude)*((s32)ef.gain)) / 85;		// single effect corresponds 75%
+			//s32 mag = (((s32)ef.magnitude)*((s32)ef.gain)) / (780.0/nextEID);		// test number of active effects
 			// rFactor2 use only offset for main effect
 			s32 offset = ef.offset + 1;				// offset works in range -128...0...+127, and start effect with value -1
 			offset *= 3.125;						// to operate the force effect [0,400];
@@ -215,49 +222,51 @@ s32 cFFB::CalcTorqueCommand (s32 pos)
 			{
 			case USB_EFFECT_CONSTANT:
 				command -= ConstrainEffect(mag)*configConstantGain;
-				//LogTextLf("_pro Constant");
+				LogTextLf("_pro Constant");
 				break;
 			case USB_EFFECT_RAMP:
 				command -= ConstrainEffect(mag)*configConstantGain;
-				//LogTextLf("_pro ramp");
+				LogTextLf("_pro ramp");
 				break;
 			case USB_EFFECT_SQUARE:
-				//LogTextLf("_pro square");
+				LogTextLf("_pro square");
 				break;
 			case USB_EFFECT_SINE:
+				posSine += 0.001;
+				if (posSine > 2) posSine = 0;
 				command += SineEffect(1,ef.period,mag)*configSineGain;
-				//LogTextLf("_pro sine");
+				LogTextLf("_pro sine");
 				break;
 			case USB_EFFECT_TRIANGLE:
-				//LogTextLf("_pro triangle");
+				LogTextLf("_pro triangle");
 				break;
 			case USB_EFFECT_SAWTOOTHDOWN:
-				//LogTextLf("_pro sawtoothdown");
+				LogTextLf("_pro sawtoothdown");
 				break;
 			case USB_EFFECT_SAWTOOTHUP:
-				//LogTextLf("_pro sawtootup");
+				LogTextLf("_pro sawtootup");
 				break;
 			case USB_EFFECT_SPRING:
-				command += SpringEffect(err,mag)*configSpringGain;
-				//LogTextLf("_pro spring");
+				command += SpringEffect(-pos,mag)*configSpringGain;
+				LogTextLf("_pro spring");
 				break;
 			case USB_EFFECT_DAMPER:
 				command += DamperEffect(spd,mag)*configDamperGain;
-				//LogTextLf("_pro damper");
+				LogTextLf("_pro damper");
 				break;
 			case USB_EFFECT_INERTIA:
 				command += InertiaEffect(spd,mag)*configInertiaGain;
-				//LogTextLf("_pro inertia");
+				LogTextLf("_pro inertia");
 				break;
 			case USB_EFFECT_FRICTION:
 				command += FrictionEffect(spd,mag)*configFrictionGain;
-				//LogTextLf("_pro friction");
+				LogTextLf("_pro friction");
 				break;
 			case USB_EFFECT_CUSTOM:
 				break;
 			case USB_EFFECT_PERIODIC:
-				command -= ConstrainEffect(offset)*configConstantGain;
-				//LogTextLf("_pro periodic");
+				command -= ConstrainEffect(-offset)*configConstantGain;
+				LogTextLf("_pro periodic");
 				break;
 			default:
 				break;
@@ -301,7 +310,7 @@ void BRFFB::calibrate() {
 	}
 	myEnc.Write(ROTATION_MAX);
 	/* Girar para esquerda até o batente e setar a posicao atual/2 */
-	setPWMDir(-(MM_MIN_MOTOR_TORQUE + MM_MAX_MOTOR_TORQUE) / 2);
+	/*setPWMDir(-(MM_MIN_MOTOR_TORQUE + MM_MAX_MOTOR_TORQUE) / 2);
 	delay(200);
 	for (int step = 0; step < 1000; step++) {
 		setPWMDir(-(MM_MIN_MOTOR_TORQUE + MM_MAX_MOTOR_TORQUE) / 2);
@@ -310,7 +319,7 @@ void BRFFB::calibrate() {
 			break;
 		else
 			leftGap = atual;
-	}
+	}*/
 	setPWMDir(0);
 	if (startPos == atual) {
 		cal_println("Calibrating Error");
@@ -512,7 +521,7 @@ int FfbproSetEffect (USB_FFBReport_SetEffect_Output_Data_t *data,volatile TEffec
 	//s32 mag = (((s32)effect->magnitude)*((s32)effect->gain)) / 163;
 
 	// Fill in the effect type specific data
-	switch (data->effectType)
+	/*switch (data->effectType)
 	{
 	case USB_EFFECT_SQUARE:
 	case USB_EFFECT_SINE:
@@ -529,7 +538,7 @@ int FfbproSetEffect (USB_FFBReport_SetEffect_Output_Data_t *data,volatile TEffec
 	case USB_EFFECT_CUSTOM:
 	default:
 		break;
-	}
+	}*/
 	/*if (command > 0)
 		command = map(command, 0, 1000, MM_MIN_MOTOR_TORQUE, MM_MAX_MOTOR_TORQUE - 10);
 	else if (command < 0)

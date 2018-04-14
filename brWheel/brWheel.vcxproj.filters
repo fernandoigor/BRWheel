@@ -24,6 +24,7 @@
     <None Include="pwm.ino" />
     <None Include="QuadEncoder.ino" />
     <None Include="SerialInterface.ino" />
+    <None Include="ConfigHID.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.brWheel.vsarduino.h">
@@ -48,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="USBCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigHID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

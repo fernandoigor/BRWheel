@@ -33,7 +33,9 @@ this software.
 #include "QuadEncoder.h"
 //#include "HX711.h"
 #include <USBDesc.h>
+#include "ConfigHID.h"
 
+extern u8 valueglobal;
 
 //--------------------------------------- Globals --------------------------------------------------------
 
@@ -47,7 +49,11 @@ u32 last_ConfigSerial = 0;
 u32 last_refresh;
 b8 fault;
 s32 accel,brake,clutch,turn;
+s32 accelMin=1024, accelMax=0;
+s32 brakeMin = 1024, brakeMax = 0;
+s32 clutchMin = 1024, clutchMax = 0;
 
+s32 shifterX, shifterY;
 
 
 cFFB gFFB;
@@ -107,6 +113,7 @@ void setup()
 	brake = 0;
 	clutch = 0;
 	turn = 0;
+	//pinMode();
 
 	//ReadEEPROMConfig();
 
@@ -119,6 +126,7 @@ void setup()
 // 	pinMode(SCK,INPUT); //11,INPUT);
 // 	pinMode(MISO,INPUT); //12,INPUT);
 // 	pinMode(MOSI,INPUT); //13,INPUT);
+	//brWheelFFB.offset = (MAX_ENCODER_ROTATION - ROTATION_MAX) / 2;
 
 	myEnc.Init(ROTATION_MID - brWheelFFB.offset,true);//ROTATION_MID + gCalibrator.mOffset);
 
@@ -160,15 +168,9 @@ void loop()
 			last_refresh = now_micros;
 			
 			turn = myEnc.Read() - ROTATION_MID - brWheelFFB.offset;
-
 			command = gFFB.CalcTorqueCommand(turn);
 
-			if (command > 0)
-				command = map(command, 0, 1000, MM_MIN_MOTOR_TORQUE, MM_MAX_MOTOR_TORQUE);
-			else if (command < 0)
-				command = -map(-command, 0, 1000, MM_MIN_MOTOR_TORQUE, MM_MAX_MOTOR_TORQUE);
-			else
-				command = 0;
+			
 			setPWMDir(command);
 
 			turn = (turn*X_AXIS_PHYS_MAX) / ROTATION_MAX;
@@ -182,14 +184,49 @@ void loop()
 				accel = analog_inputs[ACCEL_INPUT];
 				brake = analog_inputs[BRAKE_INPUT];
 				clutch = analog_inputs[CLUTCH_INPUT];
+				shifterX = analog_inputs[SHIFTER_X_INPUT];
+				shifterY = analog_inputs[SHIFTER_Y_INPUT];
+
+				if (accel < accelMin) {
+					accelMin = accel;
+				}
+				if (accel > accelMax) {
+					accelMax = accel;
+				}
+				if (brake < brakeMin) {
+					brakeMin = brake;
+				}
+				if (brake > brakeMax) {
+					brakeMax = brake;
+				}
+				if (clutch < clutchMin) {
+					clutchMin = clutch;
+				}
+				if (clutch > clutchMax) {
+					clutchMax = clutch;
+				}
+				accel = map(accel, accelMin+70, accelMax-15, 0, 255);
+				accel = constrain(accel, 0, 255);
+				brake = map(brake, brakeMin + 15, brakeMax - 70, 0, 255);
+				brake = constrain(brake, 0, 255);
+				clutch = map(clutch, clutchMin + 15, clutchMax - 15, 0, 255);
+				clutch = constrain(clutch, 0, 255);
+
+				shifterX = map(shifterX, 0, 1024, 0, 255);
+				shifterY = map(shifterY, 0, 1024, 0, 255);	// DEBUG H-SHIFTER
+
 
 				u32 buttons = readInputButtons();
 
-				SendInputReport((s16)turn, (u16)accel, (u16)brake, (u16)clutch, buttons);
+				//SendInputReport((s16)turn, (u16)accel, (u16)brake, (u16)clutch, buttons);
+				SendInputReport((s16)turn, (u16)accel, (u16)brake, (u16)clutch, (u16)shifterX, (u16)shifterY, buttons);
+				
 
 				ClearAnalogInputs();
 				if (timeDiffConfigSerial > CONFIG_SERIAL_PERIOD) {
-					readSerial();
+					if (CONFIG_SERIAL.available() > 0) {
+						readSerial();
+					}
 					last_ConfigSerial = now_micros;
 				}
 			}

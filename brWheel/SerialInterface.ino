@@ -11,7 +11,7 @@ u8 toUpper(u8 c)
 }
 
 void readSerial() {
-	if (CONFIG_SERIAL.available())
+	if (CONFIG_SERIAL.available() > 0)
 	{
 		u8 c = toUpper(CONFIG_SERIAL.read());
 		//DEBUG_SERIAL.println(c);
