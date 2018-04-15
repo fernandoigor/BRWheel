@@ -44,7 +44,7 @@
 #define CDC_ENDPOINT_IN		(CDC_FIRST_ENDPOINT+2)
 
 #define HID_INTERFACE		(CDC_ACM_INTERFACE + CDC_INTERFACE_COUNT)		// HID Interface
-#define HID_FIRST_ENDPOINT	(CDC_FIRST_ENDPOINT + CDC_ENPOINT_COUNT)
+#define HID_FIRST_ENDPOINT	(CDC_FIRST_ENDPOINT + CDC_ENPOINT_COUNT)	// 1 + 3
 #define HID_ENDPOINT_INT	(HID_FIRST_ENDPOINT)
 #define HID_ENDPOINT_OUT	(HID_FIRST_ENDPOINT+1)
 
@@ -61,9 +61,9 @@
 
 #define NB_AXIS			4
 #define NB_FF_AXIS		1
-#define NB_BUTTONS		18
+#define NB_BUTTONS		32//24 //18
 #define X_AXIS_NB_BITS	16
-#define Y_AXIS_NB_BITS	10
+#define Y_AXIS_NB_BITS	8	//10
 #define Z_AXIS_NB_BITS	10
 #define RX_AXIS_NB_BITS	10
 
@@ -88,7 +88,8 @@
 //#define SendInputReport(m_x,m_y,m_z,m_buttons)			Joystick.send_16_16_12(m_x,m_y,m_z,m_buttons)
 //#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_10_10(m_x,m_y,m_z,m_rx,m_buttons)
 //#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_16_12(m_x,m_y,m_z,m_buttons)
-#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_18(m_x,m_y,m_z,m_rx,m_buttons)
+//#define SendInputReport(m_x,m_y,m_z,m_rx,m_buttons)			Joystick.send_16_10_18(m_x,m_y,m_z,m_rx,m_buttons)
+#define SendInputReport(m_x,m_y,m_z,m_rx,sx,sy,m_buttons)			Joystick.send_16_8_32(m_x,m_y,m_z,m_rx,sx,sy,m_buttons)
 
 
 #endif
