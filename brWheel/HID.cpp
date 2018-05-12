@@ -965,7 +965,7 @@ void Joystick_::send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, ui
 
 }
 
-
+// DEBUG use 2 axis to H-SHIFTER
 void Joystick_::send_16_8_32(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint16_t sx, uint16_t sy, uint32_t buttons)
 {
 	u8 j[11];

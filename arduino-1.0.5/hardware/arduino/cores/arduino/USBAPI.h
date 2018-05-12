@@ -79,6 +79,7 @@ public:
    void send_16_10_10_10(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint16_t buttons);
    void send_16_12_12_12(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons);
    void send_16_10_18(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint32_t buttons);
+   // DEBUG 2 axis to H-Shifter
    void send_16_8_32(int16_t x, uint16_t y, uint16_t z, uint16_t rx, uint16_t sx, uint16_t sy, uint32_t buttons);
 };
 extern Joystick_ Joystick;

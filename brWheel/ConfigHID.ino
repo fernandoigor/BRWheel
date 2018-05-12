@@ -3,7 +3,7 @@
 #include "ConfigHID.h"
 
 
-int configHID(USB_ConfigReport *data) {
+void configHID(USB_ConfigReport *data) {
 	if (data->Info == 1) {
 		int rotation = data->Rotation;
 		rotation = constrain(rotation, 180, 900);

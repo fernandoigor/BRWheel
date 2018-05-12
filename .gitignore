@@ -12,8 +12,57 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+
+
+# Arduino CORE 1.0.5
+
+arduino-1.0.5/drivers/
+arduino-1.0.5/examples/
+arduino-1.0.5/java/
+arduino-1.0.5/lib/
+arduino-1.0.5/reference/
+arduino-1.0.5/tools/
+arduino-1.0.5/hardware/arduino/cores/arduino/avr-libc/
+arduino-1.0.5/hardware/arduino/cores/arduino_gs/
+arduino-1.0.5/hardware/arduino/cores/robot/
+arduino-1.0.5/hardware/arduino/bootloaders/
+arduino-1.0.5/hardware/arduino/firmwares/
+arduino-1.0.5/hardware/arduino/variants/
+arduino-1.0.5/hardware/arduino/*.txt
+arduino-1.0.5/hardware/tools/
+arduino-1.0.5/libraries/EEPROM/
+arduino-1.0.5/libraries/Esplora/
+arduino-1.0.5/libraries/Ethernet/
+arduino-1.0.5/libraries/Firmata/
+arduino-1.0.5/libraries/GSM/
+arduino-1.0.5/libraries/LiquidCrystal/
+arduino-1.0.5/libraries/Robot_Control/
+arduino-1.0.5/libraries/Robot_Motor/
+arduino-1.0.5/libraries/SD/
+arduino-1.0.5/libraries/Servo/
+arduino-1.0.5/libraries/SoftwareSerial/
+arduino-1.0.5/libraries/SPI/
+arduino-1.0.5/libraries/Stepper/
+arduino-1.0.5/libraries/TFT/
+arduino-1.0.5/libraries/WiFi/
+arduino-1.0.5/libraries/Wire/
+arduino-1.0.5/*.exe
+arduino-1.0.5/*.dll
+arduino-1.0.5/*.txt
+
 # Build results
-[Dd]ebug/
+
+# ADD only brWheel.hex
+
+brWheel.*.*
+brWheel.elf
+*.buildinfo
+*.a
+*.cpp.*
+
+
+#[Dd]ebug/
+
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -23,6 +72,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+__vm/
 
 # Visual Studio 2015 cache/options directory
 .vs/

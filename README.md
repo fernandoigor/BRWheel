@@ -22,5 +22,30 @@
 ```sh
  - FFB (Added periodic effect type), working rFactor2
  - Turn (16bits), throttle,brake and clutch (8bits) and 32 Buttons (but 20 working with G27)
- - Configuration profile with HID (v2)
+ - Configuration profile with HID (v2) check BRWHeel-Profile
 ```
+
+### Recommendations & Problems
+__________________
+#####  - Install the **Arduino Software** in the same project folder.
+* To facilitate any updating of the core files with the project repository
+```sh
+/git-directory/arduino-1.0.5/[arduino.exe | *.dll | hardware/ | libraries/ ]
+/git-directory/arduino-1.0.5/(project)[ hardware/ | libraries/ ]
+/git-directory/brWheel/(project)[ * ]
+```
+
+___________________
+##### - Visual Studio & Visual Micro
+* I use Visual Studio Community 2017, is free and good.
+* Visual Micro installed on the VS extensions panel.
+* It better reports errors.
+
+___________________
+##### - If you use the standard Arduino IDE
+* Erros like
+```sh
+error: stray '\' in program
+error: stray '#' in program
+```
+IDE creates strange characters (i don't know why), but fix deleting or overwriting the lines.

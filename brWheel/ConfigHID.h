@@ -25,25 +25,7 @@ typedef struct
 	uint8_t Version;
 } USB_ConfigReport;
 
-typedef struct
-{
-	uint16_t Call : 8;
-	uint16_t Rotation : 10;
-	uint16_t GeneralGain : 8;
-	uint16_t ConstantGain : 8;
-	uint16_t DamperGain : 8;
-	uint16_t FrictionGain : 8;
-	uint16_t SineGain : 8;
-	uint16_t SpringGain : 8;
-	uint16_t CenterGain : 8;
-	uint16_t StopGain : 8;
-	uint16_t MaxForce : 9;
-	uint16_t MinForce : 9;
-	uint16_t Centralize : 1;
-	uint16_t Calibrate : 1;
-} USB_ConfigReportReturn;
 
-
-int configHID(USB_ConfigReport *data);
+void configHID(USB_ConfigReport *data);
 
 #endif // _CONFIGHID_H_
